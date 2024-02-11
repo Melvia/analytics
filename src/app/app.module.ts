@@ -7,6 +7,7 @@ import {MatTabsModule} from "@angular/material/tabs";
 import {PlannedOperationsModule} from "./planned-operations/planned-operations.module";
 import {TabsComponent} from "./planned-operations/tabs-component/tabs.component";
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from "@angular/material/form-field";
 
 
 @NgModule({
@@ -19,10 +20,10 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     AppRoutingModule,
     PlannedOperationsModule,
     TabsComponent,
-
   ],
   providers: [
-    provideAnimationsAsync('noop')
+    provideAnimationsAsync('noop'),
+    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },
   ],
   bootstrap: [AppComponent]
 })
