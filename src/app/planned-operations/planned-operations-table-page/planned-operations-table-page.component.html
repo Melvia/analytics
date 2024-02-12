@@ -32,8 +32,8 @@
         class="mat-elevation-z8"
       >
         <!-- Position Column -->
-        <ng-container matColumnDef="position">
-          <th mat-header-cell *matHeaderCellDef>No.</th>
+        <ng-container matColumnDef="targetDuration">
+          <th mat-header-cell *matHeaderCellDef>Планируемое время</th>
           <td
             mat-cell
             *matCellDef="let element; let i = index"
@@ -43,15 +43,15 @@
               <input
                 matInput
                 type="text"
-                formControlName="position"
+                formControlName="targetDuration"
 
               />
             </mat-form-field></td
           ></ng-container>
 
         <!-- Name Column -->
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef>Name</th>
+        <ng-container matColumnDef="activityGroup">
+          <th mat-header-cell *matHeaderCellDef>Группа</th>
           <td
             mat-cell
             *matCellDef="let element; let i = index"
@@ -65,7 +65,7 @@
               <input
                 matInput
                 type="text"
-                formControlName="name"
+                formControlName="activityGroup"
                 [readonly]="VOForm.get('VORows').value[i].isEditable"
               />
             </mat-form-field>
@@ -74,7 +74,7 @@
         </ng-container>
 
         <!-- Weight Column -->
-        <ng-container matColumnDef="weight">
+        <ng-container matColumnDef="activityPhase">
           <th mat-header-cell *matHeaderCellDef>Weight</th>
           <td
             mat-cell
@@ -89,7 +89,7 @@
               <input
                 matInput
                 type="text"
-                formControlName="weight"
+                formControlName="activityPhase"
               />
             </mat-form-field>
             <!-- </span> -->
@@ -97,7 +97,7 @@
         </ng-container>
 
         <!-- Symbol Column -->
-        <ng-container matColumnDef="symbol">
+        <ng-container matColumnDef="mdFrom">
           <th mat-header-cell *matHeaderCellDef>Symbol</th>
           <td
             mat-cell
@@ -111,7 +111,50 @@
               <input
                 matInput
                 type="text"
-                formControlName="symbol"
+                formControlName="mdFrom"
+                [readonly]="VOForm.get('VORows').value[i].isEditable"
+              />
+            </mat-form-field>
+            <!-- </span> -->
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="mdTo">
+          <th mat-header-cell *matHeaderCellDef>Symbol</th>
+          <td
+            mat-cell
+            *matCellDef="let element; let i = index"
+            [formGroup]="element"
+          >
+            <!-- <span [hidden]="VOForm.get('VORows').value[i].isEditable"> -->
+            <mat-form-field
+              style="width: 100%"
+            >
+              <input
+                matInput
+                type="text"
+                formControlName="mdTo"
+                [readonly]="VOForm.get('VORows').value[i].isEditable"
+              />
+            </mat-form-field>
+            <!-- </span> -->
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="stepNo">
+          <th mat-header-cell *matHeaderCellDef>Symbol</th>
+          <td
+            mat-cell
+            *matCellDef="let element; let i = index"
+            [formGroup]="element"
+          >
+            <!-- <span [hidden]="VOForm.get('VORows').value[i].isEditable"> -->
+            <mat-form-field
+              style="width: 100%"
+            >
+              <input
+                matInput
+                type="text"
+                formControlName="stepNo"
                 [readonly]="VOForm.get('VORows').value[i].isEditable"
               />
             </mat-form-field>

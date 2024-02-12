@@ -3,7 +3,7 @@ import {MatTableDataSource, MatTableModule} from "@angular/material/table";
 import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {MatPaginator} from "@angular/material/paginator";
 import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {lastValueFrom, Observable} from "rxjs";
 
 export interface PeriodicElement {
   name: string;
@@ -42,7 +42,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class PlannedOperationsTablePageComponent implements OnInit {
 
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
+  displayedColumns: string[] = ['targetDuration', 'activityGroup', 'activityPhase', 'mdFrom', 'mdTo', 'stepNo'];
   dataSource = new MatTableDataSource<any>();
 
   isLoading = true;
@@ -50,31 +50,37 @@ export class PlannedOperationsTablePageComponent implements OnInit {
   pageNumber: number = 1;
   VOForm: FormGroup;
   isEditableNew: boolean = true;
+
   constructor(
     private fb: FormBuilder,
     private _formBuilder: FormBuilder,
     private http: HttpClient,
-  ){}
+  ) {
+  }
 
   ngOnInit(): void {
     this.VOForm = this._formBuilder.group({
       VORows: this._formBuilder.array([])
     });
 
-    const data = this.fetchData();
+    this.fetchData().subscribe((data) => {
+        this.VOForm = this.fb.group({
+          VORows: this.fb.array(data.map(val => this.fb.group({
+              targetDuration: new FormControl(val.targetDuration),
+              activityGroup: new FormControl(val.activityGroup),
+              activityPhase: new FormControl(val.activityPhase),
+              mdFrom: new FormControl(val.mdFrom),
+              mdTo: new FormControl(val.mdTo),
+              action: new FormControl('existingRecord'),
+              isEditable: new FormControl(true),
+              isNewRow: new FormControl(false),
+            })
+          )) //end of fb array
+        }); // end of form group cretation
+      }
+    );
 
-    this.VOForm = this.fb.group({
-      VORows: this.fb.array(ELEMENT_DATA.map(val => this.fb.group({
-          position: new FormControl(val.position),
-          name: new FormControl(val.name),
-          weight: new FormControl(val.weight),
-          symbol: new FormControl(val.symbol),
-          action: new FormControl('existingRecord'),
-          isEditable: new FormControl(true),
-          isNewRow: new FormControl(false),
-        })
-      )) //end of fb array
-    }); // end of form group cretation
+
     this.isLoading = false;
     this.dataSource = new MatTableDataSource((this.VOForm.get('VORows') as FormArray).controls);
     this.dataSource.paginator = this.paginator;
@@ -87,7 +93,6 @@ export class PlannedOperationsTablePageComponent implements OnInit {
     //Custom filter according to name column
     // this.dataSource.filterPredicate = (data: {name: string}, filterValue: string) =>
     //   data.name.trim().toLowerCase().indexOf(filterValue) !== -1;
-
 
 
   }
@@ -103,6 +108,7 @@ export class PlannedOperationsTablePageComponent implements OnInit {
       length: this.paginator.length
     });
   }
+
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.paginatorList = document.getElementsByClassName('mat-paginator-range-label');
@@ -125,7 +131,7 @@ export class PlannedOperationsTablePageComponent implements OnInit {
   AddNewRow() {
     // this.getBasicDetails();
     const control = this.VOForm.get('VORows') as FormArray;
-    control.insert(0,this.initiateVOForm());
+    control.insert(0, this.initiateVOForm());
     this.dataSource = new MatTableDataSource(control.controls)
     // control.controls.unshift(this.initiateVOForm());
     // this.openPanel(panel);
@@ -156,6 +162,7 @@ export class PlannedOperationsTablePageComponent implements OnInit {
 
   paginatorList: HTMLCollectionOf<Element>;
   idx: number;
+
   onPaginateChange(paginator: MatPaginator, list: HTMLCollectionOf<Element>) {
     setTimeout((idx) => {
       let from = (paginator.pageSize * paginator.pageIndex) + 1;
@@ -192,7 +199,6 @@ export class PlannedOperationsTablePageComponent implements OnInit {
   fetchData(): Observable<PlannedOperations[]> {
     return this.http.get<PlannedOperations[]>('assets/6BUVp.json');
   }
-
 
 
 }
