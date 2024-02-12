@@ -1,8 +1,4 @@
 <div class="mat-elevation-z8">
-  <button>
-    <mat-icon (click)="AddNewRow()" class="add-button">add_box</mat-icon>
-  </button>
-  <br />
   <mat-form-field style="width: 40%">
 
     <mat-label>Filter</mat-label>
@@ -75,7 +71,7 @@
 
         <!-- Weight Column -->
         <ng-container matColumnDef="activityPhase">
-          <th mat-header-cell *matHeaderCellDef>Weight</th>
+          <th mat-header-cell *matHeaderCellDef>Этап</th>
           <td
             mat-cell
             *matCellDef="let element; let i = index"
@@ -98,7 +94,7 @@
 
         <!-- Symbol Column -->
         <ng-container matColumnDef="mdFrom">
-          <th mat-header-cell *matHeaderCellDef>Symbol</th>
+          <th mat-header-cell *matHeaderCellDef>Глубина от</th>
           <td
             mat-cell
             *matCellDef="let element; let i = index"
@@ -119,7 +115,7 @@
           </td>
         </ng-container>
         <ng-container matColumnDef="mdTo">
-          <th mat-header-cell *matHeaderCellDef>Symbol</th>
+          <th mat-header-cell *matHeaderCellDef>Глубина до</th>
           <td
             mat-cell
             *matCellDef="let element; let i = index"
@@ -141,7 +137,7 @@
         </ng-container>
 
         <ng-container matColumnDef="stepNo">
-          <th mat-header-cell *matHeaderCellDef>Symbol</th>
+          <th mat-header-cell *matHeaderCellDef>Номер шага</th>
           <td
             mat-cell
             *matCellDef="let element; let i = index"

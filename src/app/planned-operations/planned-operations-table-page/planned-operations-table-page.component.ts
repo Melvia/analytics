@@ -184,14 +184,14 @@ export class PlannedOperationsTablePageComponent implements OnInit {
 
   initiateVOForm(): FormGroup {
     return this.fb.group({
-
-      position: new FormControl(234),
-      name: new FormControl(''),
-      weight: new FormControl(''),
-      symbol: new FormControl(''),
+      targetDuration: new FormControl(0),
+      activityGroup: new FormControl(''),
+      activityPhase: new FormControl(''),
+      mdFrom: new FormControl(''),
+      mdTo: new FormControl(''),
       action: new FormControl('newRecord'),
-      isEditable: new FormControl(false),
-      isNewRow: new FormControl(true),
+      isEditable: new FormControl(true),
+      isNewRow: new FormControl(false),
     });
   }
 
