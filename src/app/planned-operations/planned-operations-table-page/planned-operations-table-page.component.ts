@@ -5,13 +5,6 @@ import {MatPaginator} from "@angular/material/paginator";
 import {HttpClient} from "@angular/common/http";
 import {lastValueFrom, Observable} from "rxjs";
 
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
-
 export interface PlannedOperations {
   targetDuration: number,
   activityGroup: string,
@@ -20,46 +13,6 @@ export interface PlannedOperations {
   mdTo: number,
   stepNo: string,
 }
-
-// const ELEMENT_DATA: PeriodicElement[] = [
-//   {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-//   {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-//   {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-//   {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-//   {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-//   {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-//   {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-//   {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-//   {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-//   {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-//   {position: 11, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-// ];
-
-const ELEMENT_DATA : PlannedOperations[] = [
-  {
-    "targetDuration": 56,
-    "activityGroup": "В",
-    "activityPhase": "Бурение кондуктора",
-    "mdFrom": 1152.5590551135,
-    "mdTo": 1152.5590551135,
-    "stepNo": "19"
-  },
-  {
-    "targetDuration": 53,
-    "activityGroup": "В",
-    "activityPhase": "Бурение кондуктора",
-    "mdFrom": 1152.5590551135,
-    "mdTo": 1152.5590551135,
-    "stepNo": "18"
-  },
-  {
-    "targetDuration": 44,
-    "activityGroup": "В",
-    "activityPhase": "Бурение кондуктора",
-    "mdFrom": 1152.5590551135,
-    "mdTo": 1152.5590551135,
-    "stepNo": "16"
-  }]
 
 @Component({
   selector: 'app-planned-operations-table-page',
@@ -85,30 +38,10 @@ export class PlannedOperationsTablePageComponent implements OnInit {
   ) {
   }
 
-  async ngOnInit(): Promise<void> {
+  ngOnInit(): void {
     this.VOForm = this._formBuilder.group({
       VORows: this._formBuilder.array([])
     });
-
-    // const data = await lastValueFrom(this.fetchData());
-    // if (data?.length) {
-    //   this.VOForm = this.fb.group({
-    //     VORows: this.fb.array(data.map(val => this.fb.group({
-    //         targetDuration: new FormControl(val.targetDuration),
-    //         activityGroup: new FormControl(val.activityGroup),
-    //         activityPhase: new FormControl(val.activityPhase),
-    //         mdFrom: new FormControl(val.mdFrom),
-    //         symbol: new FormControl(val.mdTo),
-    //         action: new FormControl('existingRecord'),
-    //         isEditable: new FormControl(true),
-    //         isNewRow: new FormControl(false),
-    //       })
-    //     )) //end of fb array
-    //   }); // e
-    //
-    //   // nd of form group cretation
-    // }
-
 
     this.fetchData().subscribe((data) => {
         this.VOForm = this.fb.group({
@@ -121,11 +54,11 @@ export class PlannedOperationsTablePageComponent implements OnInit {
               action: new FormControl('existingRecord'),
               isEditable: new FormControl(true),
               isNewRow: new FormControl(false),
-            stepNo: new FormControl(val.stepNo),
+              stepNo: new FormControl(val.stepNo),
             })
           )) //end of fb array
         }); // end of form group cretation
-  //    this.changeDetector.detectChanges();
+        //    this.changeDetector.detectChanges();
 
         this.isLoading = false;
         this.dataSource = new MatTableDataSource((this.VOForm.get('VORows') as FormArray).controls);
@@ -138,7 +71,6 @@ export class PlannedOperationsTablePageComponent implements OnInit {
 
       }
     );
-
 
 
     //Custom filter according to name column
