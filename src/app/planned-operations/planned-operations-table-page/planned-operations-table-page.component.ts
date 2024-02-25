@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, Input, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource, MatTableModule} from "@angular/material/table";
 import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {MatPaginator} from "@angular/material/paginator";
@@ -20,8 +20,9 @@ export interface PlannedOperations {
   styleUrl: './planned-operations-table-page.component.scss',
 })
 export class PlannedOperationsTablePageComponent implements OnInit {
+  @Input() plannedOperationsData : PlannedOperations[];
 
-  displayedColumns: string[] = ['targetDuration', 'activityGroup', 'activityPhase', 'mdFrom', 'mdTo', 'stepNo'];
+  displayedColumns: string[] = ['activityGroup', 'activityPhase', 'stepNo', 'mdFrom', 'mdTo', 'targetDuration', 'cost'];
   dataSource = new MatTableDataSource<any>();
 
   isLoading = true;
@@ -34,7 +35,6 @@ export class PlannedOperationsTablePageComponent implements OnInit {
     private fb: FormBuilder,
     private _formBuilder: FormBuilder,
     private http: HttpClient,
-    private changeDetector: ChangeDetectorRef,
   ) {
   }
 
@@ -46,15 +46,17 @@ export class PlannedOperationsTablePageComponent implements OnInit {
     this.fetchData().subscribe((data) => {
         this.VOForm = this.fb.group({
           VORows: this.fb.array(data.map(val => this.fb.group({
-              targetDuration: new FormControl(val.targetDuration),
               activityGroup: new FormControl(val.activityGroup),
               activityPhase: new FormControl(val.activityPhase),
+            stepNo: new FormControl(val.stepNo),
               mdFrom: new FormControl(val.mdFrom),
               mdTo: new FormControl(val.mdTo),
+              targetDuration: new FormControl(val.targetDuration),
+              cost:  new FormControl(0),
               action: new FormControl('existingRecord'),
               isEditable: new FormControl(true),
               isNewRow: new FormControl(false),
-              stepNo: new FormControl(val.stepNo),
+
             })
           )) //end of fb array
         }); // end of form group cretation
@@ -167,11 +169,12 @@ export class PlannedOperationsTablePageComponent implements OnInit {
 
   initiateVOForm(): FormGroup {
     return this.fb.group({
-      targetDuration: new FormControl(0),
       activityGroup: new FormControl(''),
       activityPhase: new FormControl(''),
       mdFrom: new FormControl(''),
       mdTo: new FormControl(''),
+      targetDuration: new FormControl(0),
+      cost:  new FormControl(0),
       action: new FormControl('newRecord'),
       isEditable: new FormControl(true),
       isNewRow: new FormControl(false),

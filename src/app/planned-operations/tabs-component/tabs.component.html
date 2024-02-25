@@ -1,9 +1,9 @@
 <mat-tab-group animationDuration="0ms" class="mat">
   <mat-tab label="Таблица">
-    <app-planned-operations-table-page></app-planned-operations-table-page>
+    <app-planned-operations-table-page [plannedOperationsData]="plannedOperations" ></app-planned-operations-table-page>
   </mat-tab>
   <mat-tab label="График">
-    <app-planned-operations-chart-page></app-planned-operations-chart-page>
+    <app-planned-operations-chart-page [plannedOperationsData]="plannedOperations"></app-planned-operations-chart-page>
   </mat-tab>
   </mat-tab-group>
 

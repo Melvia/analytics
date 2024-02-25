@@ -1,11 +1,15 @@
-import {Component} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {MatTabsModule} from "@angular/material/tabs";
 import {PlannedOperationsModule} from "@app/planned-operations/planned-operations.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {BrowserModule} from "@angular/platform-browser";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {HttpClientModule} from "@angular/common/http";
+import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {MatNativeDateModule} from "@angular/material/core";
+import {Observable} from "rxjs";
+import {
+  PlannedOperations
+} from "@app/planned-operations/planned-operations-table-page/planned-operations-table-page.component";
 
 @Component({
   selector: 'app-tabs-component',
@@ -22,6 +26,16 @@ import {MatNativeDateModule} from "@angular/material/core";
     ReactiveFormsModule,
   ],
 })
-export class TabsComponent {
+export class TabsComponent implements OnInit {
+
+  private http = inject(HttpClient);
+  plannedOperations: PlannedOperations[];
+  fetchData(): Observable<PlannedOperations[]> {
+    return this.http.get<PlannedOperations[]>('assets/6BUVp.json');
+  }
+
+  ngOnInit(): void {
+    this.fetchData().subscribe(data=> this.plannedOperations = data);
+  }
 
 }

@@ -28,27 +28,13 @@
         class="mat-elevation-z8"
       >
         <!-- Position Column -->
-        <ng-container matColumnDef="targetDuration">
-          <th mat-header-cell *matHeaderCellDef>Планируемое время</th>
-          <td
-            mat-cell
-            *matCellDef="let element; let i = index"
-            [formGroup]="element"
-          >
-            <mat-form-field style="width: 100%" appearance="fill">
-              <input
-                matInput
-                type="text"
-                formControlName="targetDuration"
 
-              />
-            </mat-form-field></td
-          ></ng-container>
 
         <!-- Name Column -->
         <ng-container matColumnDef="activityGroup">
-          <th mat-header-cell *matHeaderCellDef>Группа</th>
+          <th mat-header-cell *matHeaderCellDef class="cost">Группа</th>
           <td
+            class="cost"
             mat-cell
             *matCellDef="let element; let i = index"
             [formGroup]="element"
@@ -157,6 +143,40 @@
             <!-- </span> -->
           </td>
         </ng-container>
+
+        <ng-container matColumnDef="targetDuration">
+          <th mat-header-cell *matHeaderCellDef>Планируемое время</th>
+          <td
+            mat-cell
+            *matCellDef="let element; let i = index"
+            [formGroup]="element"
+          >
+            <mat-form-field style="width: 100%" appearance="fill">
+              <input
+                matInput
+                type="text"
+                formControlName="targetDuration"
+
+              />
+            </mat-form-field></td
+          ></ng-container>
+
+        <ng-container matColumnDef="cost">
+          <th class="cost" mat-header-cell *matHeaderCellDef>Цена</th>
+          <td
+            mat-cell
+            *matCellDef="let element; let i = index"
+            [formGroup]="element"
+            >
+            <mat-form-field style="width:100%" appearance="fill">
+              <input
+                matInput
+                type="text"
+                formControlName="cost"
+
+              />
+            </mat-form-field></td
+          ></ng-container>
 
         <ng-container matColumnDef="action">
           <th mat-header-cell *matHeaderCellDef>Action</th>

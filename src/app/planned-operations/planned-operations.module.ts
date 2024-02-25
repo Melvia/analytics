@@ -7,8 +7,7 @@ import {
   PlannedOperationsTablePageComponent
 } from './planned-operations-table-page/planned-operations-table-page.component';
 import {MatTab, MatTabGroup} from "@angular/material/tabs";
-import {PlannedOperationsTabsComponent} from './planned-operations-tabs/planned-operations-tabs.component';
-import {PlannedOperationsTabComponent} from './planned-operations-tab/planned-operations-tab.component';
+
 import {MatTableModule} from "@angular/material/table";
 import {MatFormField} from "@angular/material/form-field";
 import {MatCard} from "@angular/material/card";
@@ -28,8 +27,7 @@ import {DemoMaterialModule} from "@app/material-module";
   declarations: [
     PlannedOperationsChartPageComponent,
     PlannedOperationsTablePageComponent,
-    PlannedOperationsTabsComponent,
-    PlannedOperationsTabComponent,
+
   ],
   exports: [
     PlannedOperationsChartPageComponent,

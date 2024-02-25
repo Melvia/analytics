@@ -1,7 +1,11 @@
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 // import {Chart} from "chart.js";
 //import { Chart, registerables } from 'chart.js';
 import Chart from 'chart.js/auto';
+import * as _ from 'lodash';
+import {
+  PlannedOperations
+} from "@app/planned-operations/planned-operations-table-page/planned-operations-table-page.component";
 
 @Component({
   selector: 'app-planned-operations-chart-page',
@@ -12,8 +16,15 @@ export class PlannedOperationsChartPageComponent implements OnInit, AfterViewIni
 
   @ViewChild('myChart', { static: true})
   protected myChart: ElementRef<unknown>;
- ngOnInit() {
 
+  @Input() plannedOperationsData : PlannedOperations[];
+
+ prepareData(data: PlannedOperations[]) {
+   const preparedArray = _.groupBy(data, 'activityPhase');
+   console.log("preparedArray", preparedArray);
+ }
+ ngOnInit() {
+  this.prepareData(this.plannedOperationsData);
  }
 
   ngAfterViewInit(): void {
